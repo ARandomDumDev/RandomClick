@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Click for Chaos</title>
+    <style>
+        body {
+            text-align: center;
+            transition: background 0.5s;
+        }
+        img {
+            width: 200px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Click the Image... If You Dare</h1>
+    <img id="mysteryImage" src="https://i.postimg.cc/gXhwdVNx/Untitled132-20250206191635.png" alt="Click Me">
+
+    <script>
+        const messages = [
+            "BOO! Did I scare you?",
+            "Oops, you clicked the cursed image!",
+            "Now you're stuck in the matrix.",
+            "This was a test... You failed.",
+            "Click again if you dare...",
+            "Congratulations! You did absolutely nothing."
+        ];
+
+        const sounds = [
+            "https://www.fesliyanstudios.com/play-mp3/4387", // Funny scream
+            "https://www.fesliyanstudios.com/play-mp3/4386", // Weird laugh
+            "https://www.fesliyanstudios.com/play-mp3/4388"  // Error sound
+        ];
+
+        document.getElementById("mysteryImage").addEventListener("click", function() {
+            let randomEvent = Math.floor(Math.random() * 3);
+            
+            if (randomEvent === 0) {
+                // Change background color randomly
+                document.body.style.background = "#" + Math.floor(Math.random()*16777215).toString(16);
+            } else if (randomEvent === 1) {
+                // Play a weird sound
+                let audio = new Audio(sounds[Math.floor(Math.random() * sounds.length)]);
+                audio.play();
+            } else {
+                // Show a goofy message
+                alert(messages[Math.floor(Math.random() * messages.length)]);
+            }
+        });
+    </script>
+
+</body>
+</html>
