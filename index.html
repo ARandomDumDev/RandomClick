@@ -3,14 +3,38 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Click for Chaos</title>
+    <title>Random</title>
     <style>
         body {
             text-align: center;
-            transition: background 0.5s;
+            transition: background 0.2s, transform 0.5s;
+            font-family: Arial, sans-serif;
         }
         img {
             width: 200px;
+            cursor: pointer;
+            transition: transform 0.5s;
+        }
+        .shake {
+            animation: shake 0.5s infinite;
+        }
+        @keyframes shake {
+            0% { transform: translate(2px, 2px); }
+            25% { transform: translate(-2px, -2px); }
+            50% { transform: translate(2px, -2px); }
+            75% { transform: translate(-2px, 2px); }
+            100% { transform: translate(2px, 2px); }
+        }
+        .cursed-button {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            padding: 10px 20px;
+            font-size: 16px;
+            background: red;
+            color: white;
+            border: none;
             cursor: pointer;
         }
     </style>
@@ -25,30 +49,43 @@
             "BOO! Did I scare you?",
             "Oops, you clicked the cursed image!",
             "Now you're stuck in the matrix.",
-            "This was a test... You failed.",
             "Click again if you dare...",
-            "Congratulations! You did absolutely nothing."
+            "Congratulations! You achieved nothing.",
+            "Why are you still clicking?!"
         ];
 
-        const sounds = [
-            "https://www.fesliyanstudios.com/play-mp3/4387", // Funny scream
-            "https://www.fesliyanstudios.com/play-mp3/4386", // Weird laugh
-            "https://www.fesliyanstudios.com/play-mp3/4388"  // Error sound
-        ];
+        function getRandomColor() {
+            return "#" + Math.floor(Math.random()*16777215).toString(16);
+        }
 
         document.getElementById("mysteryImage").addEventListener("click", function() {
-            let randomEvent = Math.floor(Math.random() * 3);
+            let randomEvent = Math.floor(Math.random() * 6);
             
-            if (randomEvent === 0) {
-                // Change background color randomly
-                document.body.style.background = "#" + Math.floor(Math.random()*16777215).toString(16);
-            } else if (randomEvent === 1) {
-                // Play a weird sound
-                let audio = new Audio(sounds[Math.floor(Math.random() * sounds.length)]);
-                audio.play();
-            } else {
-                // Show a goofy message
-                alert(messages[Math.floor(Math.random() * messages.length)]);
+            switch (randomEvent) {
+                case 0:
+                    document.body.style.background = getRandomColor();
+                    break;
+                case 1:
+                    alert(messages[Math.floor(Math.random() * messages.length)]);
+                    break;
+                case 2:
+                    this.style.transform = "rotate(" + Math.floor(Math.random() * 360) + "deg)";
+                    break;
+                case 3:
+                    this.classList.add("shake");
+                    setTimeout(() => this.classList.remove("shake"), 500);
+                    break;
+                case 4:
+                    document.body.style.transform = "rotate(180deg)";
+                    setTimeout(() => document.body.style.transform = "rotate(0deg)", 3000);
+                    break;
+                case 5:
+                    let btn = document.createElement("button");
+                    btn.innerText = "Don't Click Me";
+                    btn.className = "cursed-button";
+                    btn.onclick = function() { alert("You were warned..."); document.body.style.background = "black"; };
+                    document.body.appendChild(btn);
+                    break;
             }
         });
     </script>
