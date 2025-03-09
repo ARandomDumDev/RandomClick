@@ -5,48 +5,175 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>The Random Quiz</title>
     <style>
-        body { font-family: Arial, sans-serif; text-align: center; background: #222; color: white; }
-        #question { font-size: 24px; margin: 20px; }
-        .option { display: block; margin: 10px auto; padding: 10px; background: #444; border: none; color: white; cursor: pointer; }
-        .option:hover { background: #666; }
-        #result { font-size: 20px; margin-top: 20px; }
+        /* Modern Styling */
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #1e1e2f, #3a3a5f);
+            color: white;
+            text-align: center;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            max-width: 600px;
+            width: 90%;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease-in-out;
+        }
+
+        h1 {
+            font-size: 28px;
+            margin-bottom: 15px;
+        }
+
+        #question {
+            font-size: 22px;
+            margin-bottom: 20px;
+            opacity: 1;
+            transition: opacity 0.5s ease-in-out;
+        }
+
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .option {
+            background: #ff6584;
+            border: none;
+            color: white;
+            padding: 12px;
+            font-size: 18px;
+            cursor: pointer;
+            border-radius: 8px;
+            transition: transform 0.2s, background 0.3s;
+        }
+
+        .option:hover {
+            background: #ff4d6d;
+            transform: scale(1.05);
+        }
+
+        .option:disabled {
+            background: #888;
+            cursor: default;
+        }
+
+        #result {
+            font-size: 18px;
+            margin-top: 20px;
+            opacity: 0;
+            transform: translateY(10px);
+            transition: opacity 0.5s, transform 0.3s;
+        }
+
+        .show {
+            opacity: 1 !important;
+            transform: translateY(0) !important;
+        }
+
+        #next-btn {
+            display: none;
+            margin-top: 15px;
+            background: #32c6ff;
+            border: none;
+            padding: 10px 15px;
+            font-size: 18px;
+            color: white;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.3s, transform 0.2s;
+        }
+
+        #next-btn:hover {
+            background: #1ea3e1;
+            transform: scale(1.05);
+        }
     </style>
 </head>
 <body>
-    <h1>The Random Quiz</h1>
-    <div id="question">Loading...</div>
-    <div id="options"></div>
-    <div id="result"></div>
+
+    <div class="container">
+        <h1>The Random Quiz</h1>
+        <div id="question">Loading...</div>
+        <div id="options" class="options"></div>
+        <div id="result"></div>
+        <button id="next-btn" onclick="loadQuestion()">Next Question</button>
+    </div>
 
     <script>
         const questions = [
-            { question: "What’s the capital of Mars?", answers: ["Redville", "Elonland", "42", "A single potato"] },
-            { question: "How many penguins does it take to build a table?", answers: ["3.5", "Depends on the wood", "Infinity", "None, penguins are lazy"] },
-            { question: "Guess the number I'm thinking of between 1 and 10,000", answers: ["1", "500", "9999", "Doesn't matter, you're wrong"] },
+            { question: "What’s the capital of Mars?", answers: ["Redville", "Elonland", "42", "A single potato"], correct: "42" },
+            { question: "How many penguins does it take to build a table?", answers: ["3.5", "Depends on the wood", "Infinity", "None, penguins are lazy"], correct: "Depends on the wood" },
+            { question: "Guess the number I'm thinking of between 1 and 10,000", answers: ["1", "500", "9999", "Doesn't matter, you're wrong"], correct: "Doesn't matter, you're wrong" },
+            { question: "How does a cat meow in French?", answers: ["Miaou", "Le Meow", "Hon Hon Hon", "It doesn’t, it just stares"], correct: "Miaou" }
+            { question: "What is a table?", answers: ["Table", "Table is table", "Random", "Ima_table144"], correct: "Table is table" }
         ];
+
+        const wrongResponses = [
+            "WRONG. The answer was: a radioactive banana.",
+            "Incorrect. Did you even try? The real answer was *The Great Spaghetti Monster*.",
+            "Nope. The actual answer was *A quantum burrito*.",
+            "Wow. That was bad. The answer was *A hamster with a jetpack*.",
+            "You really thought that was it? It was *A three-legged octopus*.",
+            "So close! Just kidding. The real answer was *An interdimensional taco*."
+        ];
+
+        let currentQuestion;
 
         function getRandomElement(arr) {
             return arr[Math.floor(Math.random() * arr.length)];
         }
 
         function loadQuestion() {
-            let q = getRandomElement(questions);
-            document.getElementById("question").textContent = q.question;
+            currentQuestion = getRandomElement(questions);
+            document.getElementById("question").textContent = currentQuestion.question;
+
             let optionsDiv = document.getElementById("options");
             optionsDiv.innerHTML = "";
-            q.answers.forEach(answer => {
+            document.getElementById("result").classList.remove("show");
+            document.getElementById("result").textContent = "";
+            document.getElementById("next-btn").style.display = "none";
+
+            currentQuestion.answers.forEach(answer => {
                 let btn = document.createElement("button");
                 btn.textContent = answer;
                 btn.className = "option";
-                btn.onclick = () => {
-                    document.getElementById("result").textContent = "WRONG. The answer was: " + getRandomElement(["A fish", "Banana phone", "17 purple llamas", "The letter Q"]);
-                    setTimeout(loadQuestion, 2000);
-                };
+                btn.onclick = () => checkAnswer(answer, btn);
                 optionsDiv.appendChild(btn);
             });
         }
 
+        function checkAnswer(answer, btn) {
+            let resultDiv = document.getElementById("result");
+            let nextBtn = document.getElementById("next-btn");
+            let allButtons = document.querySelectorAll(".option");
+
+            allButtons.forEach(button => button.disabled = true); // Disable all buttons after selecting
+
+            if (answer === currentQuestion.correct) {
+                resultDiv.textContent = "CORRECT! But also... still wrong. The universe disagrees.";
+                btn.style.background = "#32c6ff";
+            } else {
+                resultDiv.textContent = getRandomElement(wrongResponses);
+                btn.style.background = "#ff4d6d";
+            }
+
+            resultDiv.classList.add("show");
+            nextBtn.style.display = "block";
+        }
+
         loadQuestion();
     </script>
+
 </body>
 </html>
