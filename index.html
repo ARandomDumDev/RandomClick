@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>The Random Quiz</title>
     <style>
-        /* Modern Styling */
         body {
             font-family: 'Arial', sans-serif;
             background: linear-gradient(135deg, #1e1e2f, #3a3a5f);
@@ -26,78 +25,24 @@
             padding: 20px;
             border-radius: 12px;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-            transition: all 0.3s ease-in-out;
         }
 
-        h1 {
-            font-size: 28px;
-            margin-bottom: 15px;
-        }
-
-        #question {
-            font-size: 22px;
-            margin-bottom: 20px;
-            opacity: 1;
-            transition: opacity 0.5s ease-in-out;
-        }
-
-        .options {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-
+        h1 { font-size: 28px; margin-bottom: 15px; }
+        #question { font-size: 22px; margin-bottom: 20px; }
+        .options { display: flex; flex-direction: column; gap: 10px; }
         .option {
-            background: #ff6584;
-            border: none;
-            color: white;
-            padding: 12px;
-            font-size: 18px;
-            cursor: pointer;
-            border-radius: 8px;
-            transition: transform 0.2s, background 0.3s;
+            background: #ff6584; border: none; color: white; padding: 12px; font-size: 18px;
+            cursor: pointer; border-radius: 8px; transition: transform 0.2s, background 0.3s;
         }
-
-        .option:hover {
-            background: #ff4d6d;
-            transform: scale(1.05);
-        }
-
-        .option:disabled {
-            background: #888;
-            cursor: default;
-        }
-
-        #result {
-            font-size: 18px;
-            margin-top: 20px;
-            opacity: 0;
-            transform: translateY(10px);
-            transition: opacity 0.5s, transform 0.3s;
-        }
-
-        .show {
-            opacity: 1 !important;
-            transform: translateY(0) !important;
-        }
-
+        .option:hover { background: #ff4d6d; transform: scale(1.05); }
+        .option:disabled { background: #888; cursor: default; }
+        #result { font-size: 18px; margin-top: 20px; opacity: 0; transition: opacity 0.5s; }
+        .show { opacity: 1 !important; }
         #next-btn {
-            display: none;
-            margin-top: 15px;
-            background: #32c6ff;
-            border: none;
-            padding: 10px 15px;
-            font-size: 18px;
-            color: white;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: background 0.3s, transform 0.2s;
+            display: none; margin-top: 15px; background: #32c6ff; border: none; padding: 10px 15px;
+            font-size: 18px; color: white; border-radius: 8px; cursor: pointer; transition: background 0.3s;
         }
-
-        #next-btn:hover {
-            background: #1ea3e1;
-            transform: scale(1.05);
-        }
+        #next-btn:hover { background: #1ea3e1; }
     </style>
 </head>
 <body>
@@ -115,8 +60,21 @@
             { question: "What’s the capital of Mars?", answers: ["Redville", "Elonland", "42", "A single potato"], correct: "42" },
             { question: "How many penguins does it take to build a table?", answers: ["3.5", "Depends on the wood", "Infinity", "None, penguins are lazy"], correct: "Depends on the wood" },
             { question: "Guess the number I'm thinking of between 1 and 10,000", answers: ["1", "500", "9999", "Doesn't matter, you're wrong"], correct: "Doesn't matter, you're wrong" },
-            { question: "How does a cat meow in French?", answers: ["Miaou", "Le Meow", "Hon Hon Hon", "It doesn’t, it just stares"], correct: "Miaou" }
-            { question: "What is a table?", answers: ["Table", "Table is table", "Random", "Ima_table144"], correct: "Table is table" }
+            { question: "How does a cat meow in French?", answers: ["Miaou", "Le Meow", "Hon Hon Hon", "It doesn’t, it just stares"], correct: "Miaou" },
+            { question: "What color is the letter Q?", answers: ["Blue", "Zebra-striped", "Invisible", "Only visible under moonlight"], correct: "Invisible" },
+            { question: "What do clouds taste like?", answers: ["Cotton candy", "Marshmallows", "Sadness", "Sky juice"], correct: "Sky juice" },
+            { question: "Where do socks go when they disappear?", answers: ["The void", "Socktopia", "Another dimension", "Under the bed, obviously"], correct: "Another dimension" },
+            { question: "Why did the chicken cross the road?", answers: ["To get to the other side", "For the memes", "Because it was lost", "To avoid taxes"], correct: "For the memes" },
+            { question: "What’s the square root of a watermelon?", answers: ["Melon²", "Juice", "Pi", "42"], correct: "Melon²" },
+            { question: "If a tree falls in the forest and no one hears it, what happens?", answers: ["It uploads itself to the cloud", "It creates a sound vacuum", "The squirrels gossip about it", "Physics cries"], correct: "The squirrels gossip about it" },
+            { question: "How many ducks make a swarm?", answers: ["7", "Depends on the leader", "42", "Ducks don’t swarm, they plot"], correct: "Depends on the leader" },
+            { question: "Who let the dogs out?", answers: ["You", "Me", "The government", "A time traveler"], correct: "A time traveler" },
+            { question: "Where does the moon go during the day?", answers: ["To the moon spa", "To work", "Nowhere, it’s always there", "Hiding behind the sun"], correct: "Nowhere, it’s always there" },
+            { question: "What happens if you high-five yourself?", answers: ["Infinite power", "Nothing", "You become your own best friend", "A parallel universe is created"], correct: "Infinite power" },
+            { question: "What do you call a group of unicorns?", answers: ["A sparkle", "A rainbow", "A herd", "Mythical beings don’t have group names"], correct: "A sparkle" },
+            { question: "What’s the best way to tame a dragon?", answers: ["Compliments", "A large pizza", "By not trying", "Dragon Whispering"], correct: "A large pizza" },
+            { question: "Where do thoughts go when you forget them?", answers: ["The void", "Into someone else’s head", "They respawn later", "The land of lost ideas"], correct: "The land of lost ideas" },
+            { question: "How do you summon a taco?", answers: ["Say ‘Taco’ three times", "Sacrifice a burrito", "Use the Taco Bell bell", "You don’t, it chooses you"], correct: "You don’t, it chooses you" }
         ];
 
         const wrongResponses = [
@@ -156,16 +114,11 @@
         function checkAnswer(answer, btn) {
             let resultDiv = document.getElementById("result");
             let nextBtn = document.getElementById("next-btn");
-            let allButtons = document.querySelectorAll(".option");
-
-            allButtons.forEach(button => button.disabled = true); // Disable all buttons after selecting
 
             if (answer === currentQuestion.correct) {
                 resultDiv.textContent = "CORRECT! But also... still wrong. The universe disagrees.";
-                btn.style.background = "#32c6ff";
             } else {
                 resultDiv.textContent = getRandomElement(wrongResponses);
-                btn.style.background = "#ff4d6d";
             }
 
             resultDiv.classList.add("show");
